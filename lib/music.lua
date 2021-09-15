@@ -486,7 +486,10 @@ function music.chord_to_midi(c,midi_near)
       break
     end
   end
-
+  if debug then
+    print("note_match: "..note_match)
+  end
+  
   -- find notes from intervals
   whole_note_semitones={0,2,4,5,7,9,11,12}
   notes_in_chord={}
@@ -555,7 +558,7 @@ function music.chord_to_midi(c,midi_near)
   -- return
   local p={}
   for i,m in ipairs(midi_notes_in_chord) do
-    table.insert(p,{m=m,n=notes_in_chord[i],v=(m-21)/12,f=2^((m-69)/12)*440})
+    table.insert(p,{m=m,n=notes_in_chord[i],v=(m-21)/12,f=2^((m-69)/12)*440,is_root=notes_in_chord[i]:find(note_match, 1, #note_match)==1})
   end
   return p
 end
